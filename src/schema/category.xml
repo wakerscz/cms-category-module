@@ -1,0 +1,16 @@
+<table name="category" phpName="Category" namespace="CategoryModule\Database" package="./category-module/">
+    <column name="id" type="INTEGER" required="TRUE" primaryKey="TRUE" autoIncrement="TRUE"/>
+    <column name="lang_id" type="INTEGER" required="FALSE" defaultValue="NULL"/>
+    <column name="name" type="VARCHAR" required="TRUE" size="64"/>
+    <column name="slug" type="VARCHAR" required="TRUE" size="64"/>
+
+    <behavior name="nested_set" />
+
+    <foreign-key foreignTable="lang" onDelete="CASCADE">
+        <reference local="lang_id" foreign="id"/>
+    </foreign-key>
+
+    <unique>
+        <unique-column name="slug"/>
+    </unique>
+</table>

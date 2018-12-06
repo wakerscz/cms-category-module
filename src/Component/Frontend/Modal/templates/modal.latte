@@ -1,0 +1,21 @@
+{**
+ * Copyright (c) 2018 Wakers.cz
+ *
+ * @author Jiří Zapletal (http://www.wakers.cz, zapletal@wakers.cz)
+ *
+ *}
+
+
+<div class="wakers_modal" id="wakers_category_edit_modal">
+
+    <div class="modal_title">
+        <a href="#" class="close" data-wakers-modal-close>&#x2715</a>
+        Kategorie ({$presenter->template->langEntity->getName()})
+    </div>
+
+    {snippetArea modal}
+        {include './form.latte'}
+        {include './summary.latte'}
+    {/snippetArea}
+
+</div>

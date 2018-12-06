@@ -1,0 +1,29 @@
+{**
+ * Copyright (c) 2018 Wakers.cz
+ *
+ * @author Jiří Zapletal (http://www.wakers.cz, zapletal@wakers.cz)
+ *
+ *}
+
+
+<div class="wakers_modal" id="wakers_category_remove_modal">
+    {snippet modal}
+        {if $category}
+            <div class="modal_title">
+                <a href="#" class="close" data-wakers-modal-close>&#x2715</a>
+                Potvrdit odstranění kategorie
+            </div>
+
+            <div class="modal_info">
+                Tento úkon je nevratný - kategorie <strong>{$category->getName()}</strong> bude úplně odstraněna.<br>
+                Podřazené položky této kategorie se automaticky přesunou pod kategorii <strong>{$category->getParent()->getName()}</strong>.
+                <br><br>
+                Opravdu si přejete kategorii odstranit?
+            </div>
+
+            <a href="{link Remove! $category->getId()}" class="wakers_btn" data-wakers-progress-button>Ano, přeji</a>
+
+            <a href="#" class="wakers_btn inverse" data-wakers-modal-close>Ne</a>
+        {/if}
+    {/snippet}
+</div>

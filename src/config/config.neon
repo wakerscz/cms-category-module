@@ -1,0 +1,11 @@
+services:
+
+    # Repositories
+    - Wakers\CategoryModule\Repository\CategoryRepository
+
+    # Managers
+    - Wakers\CategoryModule\Manager\CategoryManager
+
+    # Components
+    - Wakers\CategoryModule\Components\Frontend\Modal\IModal
+    - Wakers\CategoryModule\Components\Frontend\RemoveModal\IRemoveModal
