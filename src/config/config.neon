@@ -7,5 +7,5 @@ services:
     - Wakers\CategoryModule\Manager\CategoryManager
 
     # Components
-    - Wakers\CategoryModule\Components\Frontend\Modal\IModal
-    - Wakers\CategoryModule\Components\Frontend\RemoveModal\IRemoveModal
+    - Wakers\CategoryModule\Component\Frontend\Modal\IModal
+    - Wakers\CategoryModule\Component\Frontend\RemoveModal\IRemoveModal

@@ -6,7 +6,7 @@
  *
  */
 
-namespace Wakers\CategoryModule\Components\Frontend\Modal;
+namespace Wakers\CategoryModule\Component\Frontend\Modal;
 
 
 use Nette\Application\UI\Form;

@@ -7,7 +7,7 @@
  */
 
 
-namespace Wakers\CategoryModule\Components\Frontend\RemoveModal;
+namespace Wakers\CategoryModule\Component\Frontend\RemoveModal;
 
 
 use Nette\Application\ForbiddenRequestException;
