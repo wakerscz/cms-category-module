@@ -15,7 +15,6 @@ use Wakers\BaseModule\Component\Frontend\BaseControl;
 use Wakers\CategoryModule\Database\Category;
 use Wakers\CategoryModule\Manager\CategoryManager;
 use Wakers\CategoryModule\Repository\CategoryRepository;
-use Wakers\LangModule\Translator\Translate;
 
 
 class RemoveModal extends BaseControl
@@ -40,12 +39,6 @@ class RemoveModal extends BaseControl
 
 
     /**
-     * @var Translate
-     */
-    protected $translate;
-
-
-    /**
      * Callback volaný po odstranění uživatele
      * @var callable
      */
@@ -61,16 +54,13 @@ class RemoveModal extends BaseControl
      * RemoveModal constructor.
      * @param CategoryRepository $categoryRepository
      * @param CategoryManager $categoryManager
-     * @param Translate $translate
      */
     public function __construct(
         CategoryRepository $categoryRepository,
-        CategoryManager $categoryManager,
-        Translate $translate
+        CategoryManager $categoryManager
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->categoryManager = $categoryManager;
-        $this->translate = $translate;
     }
 
 
@@ -116,11 +106,11 @@ class RemoveModal extends BaseControl
             $this->categoryManager->delete($this->categoryEntity);
 
             $this->presenter->notificationAjax(
-                $this->translate->translate('Category removed'),
-                $this->translate->translate("Category %category% successfully removed.", ['category' => $this->categoryEntity->getName()]),
-                    'success',
-                    FALSE
-                );
+                'Kategorie odstaněna',
+                "Kategorie '{$this->categoryEntity->getName()}' byla úspěšně odstaněna.",
+                'success',
+                FALSE
+            );
 
             $this->presenter->handleModalToggle('hide', '#wakers_category_remove_modal', FALSE);
 

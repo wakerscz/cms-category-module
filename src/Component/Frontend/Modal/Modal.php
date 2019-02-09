@@ -20,7 +20,6 @@ use Wakers\CategoryModule\Manager\CategoryManager;
 use Wakers\CategoryModule\Repository\CategoryRepository;
 use Wakers\LangModule\Database\Lang;
 use Wakers\LangModule\Repository\LangRepository;
-use Wakers\LangModule\Translator\Translate;
 
 
 class Modal extends BaseControl
@@ -44,12 +43,6 @@ class Modal extends BaseControl
      * @var Lang
      */
     protected $activeLang;
-
-
-    /**
-     * @var Translate
-     */
-    protected $translate;
 
 
     /**
@@ -81,18 +74,15 @@ class Modal extends BaseControl
      * Modal constructor.
      * @param CategoryRepository $categoryRepository
      * @param CategoryManager $categoryManager
-     * @param Translate $translate
      * @param LangRepository $langRepository
      */
     public function __construct(
         CategoryRepository $categoryRepository,
         CategoryManager $categoryManager,
-        Translate $translate,
         LangRepository $langRepository
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->categoryManager = $categoryManager;
-        $this->translate = $translate;
 
         $this->activeLang = $langRepository->getActiveLang();
         $this->nested = new NestedSet('Name');
@@ -131,18 +121,18 @@ class Modal extends BaseControl
         $form = new Form;
 
         $form->addSelect('parentId', NULL)
-            ->setRequired($this->translate->translate('Parent category is required.'));
+            ->setRequired('Nadřazená kategorie je povinná.');
 
         $form->addText('name')
-            ->setRequired($this->translate->translate('Category name is required.'))
-            ->addRule(Form::MIN_LENGTH, $this->translate->translate('Minimal length of name is %count% characters.', ['count' => 3]), 3)
-            ->addRule(Form::MAX_LENGTH, $this->translate->translate('Maximal length of name is %count% characters.', ['count' => 64]), 64);
+            ->setRequired('Název kategorie je povinný')
+            ->addRule(Form::MIN_LENGTH, 'Minimální délka názvu jsou %d znaky.', 3)
+            ->addRule(Form::MAX_LENGTH, 'Maximální délka názvu je %d znaků.',64);
 
         $form->addText('slug')
-            ->setRequired($this->translate->translate('Slug is required.'))
-            ->addRule(Form::MIN_LENGTH, $this->translate->translate('Minimal length of slug is %count% characters.', ['count' => 3]), 3)
-            ->addRule(Form::MAX_LENGTH, $this->translate->translate('Maximal length of slug is %count% characters.', ['count' => 64]), 64)
-            ->addRule(Form::PATTERN,  $this->translate->translate('Slug can contain only a-z 0-9 and dash characters.'), '[a-z0-9\-]*');
+            ->setRequired('Slug je povinný')
+            ->addRule(Form::MIN_LENGTH, 'Minimální délka slugu jsou %d znaky.', 3)
+            ->addRule(Form::MAX_LENGTH, 'Maximální délka slugu je %d znaků.',64)
+            ->addRule(Form::PATTERN, 'Slug může obsahovat pouze znaky: a-z 0-9 a pomlčku', '[a-z0-9\-]*');
 
         $form->addHidden('id', 0);
 
@@ -157,7 +147,7 @@ class Modal extends BaseControl
             $category = $this->categoryRepository->findOneById($this->categoryId);
         }
 
-        $parents = [-1 => $this->translate->translate('Without parent category')];
+        $parents = [-1 => 'Bez nadřazené kategorie'];
 
         // Nastaví možné nadřazené kategorie
         if ($langRoot)
@@ -212,15 +202,15 @@ class Modal extends BaseControl
                 }
 
                 $this->presenter->notificationAjax(
-                    $this->translate->translate('Category saved'),
-                    $this->translate->translate('Category was successfully saved.'),
+                    'Kategorie uložena',
+                    'Kategorie byla úspěšně uložena',
                     'success',
                     FALSE
                 );
 
                 // Redraw form
                 $langRoot = $this->categoryRepository->findLangRoot($this->activeLang);
-                $parents = [-1 => $this->translate->translate('Without parent category')];
+                $parents = [-1 => 'Bez nadřazené kategorie'];
 
                 // Nastaví možné nadřazené kategorie
                 if ($langRoot)
@@ -237,7 +227,7 @@ class Modal extends BaseControl
             catch (DatabaseException $exception)
             {
                 $this->presenter->notificationAjax(
-                    $this->translate->translate('Error'),
+                    'Chyba',
                     $exception->getMessage(),
                     'error'
                 );

@@ -15,7 +15,6 @@ use Wakers\BaseModule\Database\DatabaseException;
 use Wakers\CategoryModule\Database\Category;
 use Wakers\CategoryModule\Repository\CategoryRepository;
 use Wakers\LangModule\Database\Lang;
-use Wakers\LangModule\Translator\Translate;
 
 
 class CategoryManager extends AbstractDatabase
@@ -27,22 +26,11 @@ class CategoryManager extends AbstractDatabase
 
 
     /**
-     * @var Translate
-     */
-    protected $translate;
-
-
-    /**
      * CategoryManager constructor.
      * @param CategoryRepository $categoryRepository
-     * @param Translate $translate
      */
-    public function __construct(
-        CategoryRepository $categoryRepository,
-        Translate $translate
-    ) {
+    public function __construct(CategoryRepository $categoryRepository) {
         $this->categoryRepository = $categoryRepository;
-        $this->translate = $translate;
     }
 
 
@@ -74,12 +62,12 @@ class CategoryManager extends AbstractDatabase
 
         if ($categoryBySlug)
         {
-            throw new DatabaseException($this->translate->translate("Slug: '%slug%' already exists.", ['slug' => $slug]));
+            throw new DatabaseException("Slug '{$slug}' již existuje.");
         }
 
         if (!$parent)
         {
-            throw new DatabaseException($this->translate->translate("Parent category with ID: '%id%' does not exists.", ['id' => $parentId]));
+            throw new DatabaseException("Nadřazená kategorie s ID: '{$parentId}' neexistuje.");
         }
 
         $category = new Category;
@@ -109,7 +97,7 @@ class CategoryManager extends AbstractDatabase
 
         if ($categoryBySlug && $categoryBySlug !== $category)
         {
-            throw new DatabaseException($this->translate->translate("Slug '%slug% already exists.'", ['slug' => $slug]));
+            throw new DatabaseException("Slug '{$slug}' již existuje.");
         }
 
         if ($parentId < 1)
