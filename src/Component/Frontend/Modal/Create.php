@@ -32,7 +32,7 @@ trait Create
             $control->redrawControl('form');
             $control->redrawControl('summary');
 
-            $this->getComponent('structureRecipeModal')->redrawControl('form');
+            $this->getComponent('structureRecipeModal')->redrawControl('recipeForm');
         };
 
         $control->onOpen[] = function () use ($control)
