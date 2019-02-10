@@ -15,9 +15,11 @@ use Wakers\BaseModule\Component\Frontend\BaseControl;
 use Wakers\BaseModule\Database\DatabaseException;
 use Wakers\BaseModule\Util\AjaxValidate;
 use Wakers\BaseModule\Util\NestedSet;
+use Wakers\BaseModule\Util\SetDisabledForm;
 use Wakers\CategoryModule\Database\Category;
 use Wakers\CategoryModule\Manager\CategoryManager;
 use Wakers\CategoryModule\Repository\CategoryRepository;
+use Wakers\CategoryModule\Security\CategoryAuthorizator;
 use Wakers\LangModule\Database\Lang;
 use Wakers\LangModule\Repository\LangRepository;
 
@@ -25,6 +27,7 @@ use Wakers\LangModule\Repository\LangRepository;
 class Modal extends BaseControl
 {
     use AjaxValidate;
+    use SetDisabledForm;
 
 
     /**
@@ -174,6 +177,12 @@ class Modal extends BaseControl
 
         $form->onValidate[] = function (Form $form) { $this->validate($form); };
         $form->onSuccess[] = function (Form $form) { $this->success($form); };
+
+
+        if (!$this->presenter->user->isAllowed(CategoryAuthorizator::RES_FORM))
+        {
+            $this->setDisabledForm($form, TRUE);
+        }
 
         return $form;
     }

@@ -9,3 +9,7 @@ services:
     # Components
     - Wakers\CategoryModule\Component\Frontend\Modal\IModal
     - Wakers\CategoryModule\Component\Frontend\RemoveModal\IRemoveModal
+
+parameters:
+    acl:
+        - Wakers\CategoryModule\Security\CategoryAuthorizator

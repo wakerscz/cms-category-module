@@ -15,6 +15,7 @@ use Wakers\BaseModule\Component\Frontend\BaseControl;
 use Wakers\CategoryModule\Database\Category;
 use Wakers\CategoryModule\Manager\CategoryManager;
 use Wakers\CategoryModule\Repository\CategoryRepository;
+use Wakers\CategoryModule\Security\CategoryAuthorizator;
 
 
 class RemoveModal extends BaseControl
@@ -93,13 +94,13 @@ class RemoveModal extends BaseControl
 
 
     /**
-     * Handler pro odstranění uživatele
-     * @param int $userId
+     * Handler pro odstranění kategorie
+     * @param int $id
      * @throws \Exception
      */
     public function handleRemove(int $id) : void
     {
-        if ($this->presenter->isAjax())
+        if ($this->presenter->isAjax() && $this->presenter->user->isAllowed(CategoryAuthorizator::RES_REMOVE))
         {
             $this->categoryEntity = $this->categoryRepository->findOneById($id);
 

@@ -1,18 +1,18 @@
 {**
  * Copyright (c) 2018 Wakers.cz
- *
  * @author Jiří Zapletal (http://www.wakers.cz, zapletal@wakers.cz)
- *
  *}
 
-<div class="wakers_dashboard">
-    <div class="modal_subtitle">Kategorie</div>
+{if $user->isAllowed(Wakers\CategoryModule\Security\CategoryAuthorizator::RES_CATEGORY_MODULE)}
+    <div class="wakers_dashboard">
+        <div class="modal_subtitle">Kategorie</div>
 
-    <div class="dashboard_boxes">
-        <div class="dashboard_box">
-            <a href="#" data-wakers-modal-open="wakers_category_edit_modal">
-                Přehled kategorií / nastavení ({$presenter->template->langEntity->getName()})
-            </a>
+        <div class="dashboard_boxes">
+            <div class="dashboard_box">
+                <a href="#" data-wakers-modal-open="wakers_category_edit_modal">
+                    Přehled kategorií / nastavení ({$presenter->template->langEntity->getName()})
+                </a>
+            </div>
         </div>
     </div>
-</div>
+{/if}

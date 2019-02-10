@@ -5,45 +5,49 @@
  *
  *}
 
+{if $user->isAllowed(Wakers\CategoryModule\Security\CategoryAuthorizator::RES_SUMMARY)}
+    {snippet summary}
+        <div class="modal_subtitle">
+            Přehled ({count($categories, TRUE) / 3})
+        </div>
 
-{snippet summary}
-    <div class="modal_subtitle">
-        Přehled ({count($categories, TRUE) / 3})
-    </div>
+        <div class="wakers_tree_list">
 
-    <div class="wakers_tree_list">
+            {var $tree = $categories}
 
-        {var $tree = $categories}
+            {block tree}
+                <ul>
+                    {foreach $tree as $descendant}
+                        <li>
+                            <div class="inner_container">
+                                <div class="inner_box">
+                                    {$descendant['item']->getName()} &nbsp; <small>[{$descendant['item']->getSlug()}]</small>
+                                </div>
 
-        {block tree}
-            <ul>
-                {foreach $tree as $descendant}
-                    <li>
-                        <div class="inner_container">
-                            <div class="inner_box">
-                                {$descendant['item']->getName()} &nbsp; <small>[{$descendant['item']->getSlug()}]</small>
+                                <div class="inner_action">
+                                    <span data-wakers-tooltip="Počet kategorií v pod-úrovni: {count($descendant['descendants'])}">{count($descendant['descendants'])}</span>
+                                </div>
+
+                                <div class="inner_action">
+                                    {if $user->isAllowed(Wakers\CategoryModule\Security\CategoryAuthorizator::RES_REMOVE)}
+                                        <a href="{plink categoryRemoveModal:open! $descendant['item']->getId()}" class="wakers_btn btn_small inverse" data-wakers-tooltip="Odstranit kategorii" data-wakers-progress-button>
+                                            &#x267A;
+                                        </a>&nbsp
+                                    {/if}
+
+                                    <a href="{link edit! $descendant['item']->getId()}" class="wakers_btn btn_small inverse" data-wakers-tooltip="Upravit kategorii" data-wakers-progress-button >
+                                        &#x270E;
+                                    </a>
+                                </div>
                             </div>
 
-                            <div class="inner_action">
-                                <span data-wakers-tooltip="Počet kategorií v pod-úrovni: {count($descendant['descendants'])}">{count($descendant['descendants'])}</span>
-                            </div>
-
-                            <div class="inner_action">
-                                <a href="{plink categoryRemoveModal:open! $descendant['item']->getId()}" class="wakers_btn btn_small inverse" data-wakers-tooltip="Odstranit kategorii" data-wakers-progress-button>
-                                    &#x267A;
-                                </a>&nbsp;
-                                <a href="{link edit! $descendant['item']->getId()}" class="wakers_btn btn_small inverse" data-wakers-tooltip="Upravit kategorii" data-wakers-progress-button >
-                                    &#x270E;
-                                </a>
-                            </div>
-                        </div>
-
-                        {if count($descendant['descendants']) > 0}
-                            {include tree, tree => $descendant['descendants']}
-                        {/if}
-                    </li>
-                {/foreach}
-            </ul>
-        {/block}
-    </div>
-{/snippet}
+                            {if count($descendant['descendants']) > 0}
+                                {include tree, tree => $descendant['descendants']}
+                            {/if}
+                        </li>
+                    {/foreach}
+                </ul>
+            {/block}
+        </div>
+    {/snippet}
+{/if}
