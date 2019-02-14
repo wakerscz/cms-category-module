@@ -1,7 +1,7 @@
 # Category module
-Obstarává správu stromové struktury (různých) kategorií webu. Kategorie se primárně využívají pro sdružování
-tzv. struktur viz [structure module](http://www.github.com/wakerscz/cms-structure-module) -
-lze tak tedy vypisovat různé kategorie obsahující různé struktury na různých místech webu.
+Modul zajišťuje vytváření a editaci (stromu) kategorií. Do kategorií lze přiřazovat 
+[(datové) struktury](http://www.github.com/wakerscz/cms-structure-module) a následně je dle libosti 
+filtrovat na výpisu v šablonách.
 
 ## Komponenty
 
